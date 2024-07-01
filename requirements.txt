@@ -1,2 +1,4 @@
 ollama
 chromadb
+tqdm
+Pillow
