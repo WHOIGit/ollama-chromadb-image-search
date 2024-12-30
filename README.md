@@ -8,7 +8,7 @@ The text embeddings used by chromadb allow for querying the images with text pro
 # Prerequisites
 
 * [ollama](https://ollama.com/)
-* a local multimodal model [supported by ollama](https://ollama.com/library) (e.g., llava-phi3)
+* a local multimodal model [supported by ollama](https://ollama.com/search?c=vision) (e.g., llama3.2-vision)
 * A running ollama service
 
 # Use
