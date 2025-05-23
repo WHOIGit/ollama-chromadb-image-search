@@ -23,7 +23,7 @@ def get_client(persistent=False):
 
 class ImageIndex(object):
 
-    def __init__(self, collection_name, prompt=DEFAULT_USER_PROMPT, system=DEFAULT_SYSTEM_PROMPT, model='llava-phi3'):
+    def __init__(self, collection_name, prompt=DEFAULT_USER_PROMPT, system=DEFAULT_SYSTEM_PROMPT, skip_existing=True, model='llava-phi3'):
         self.client = None
         self.collection_name = collection_name
         self.prompt = prompt
@@ -38,6 +38,10 @@ class ImageIndex(object):
     def __exit__(self, exc_type, exc_value, traceback):
         pass
 
+    def exists(self, id):
+        docs = self.collection.get(ids=[id], include=['documents'])['documents']
+        return len(docs) > 0
+    
     def index_image(self, id, image_data):
         description = describe_image(image_data, prompt=self.prompt, system=self.system, model=self.model)
         self.collection.add(ids=id, documents=description)
@@ -86,5 +90,6 @@ if __name__ == '__main__':
     parser.add_argument('--model', type=str, help='Model to use for description', default='llava-phi3')
     parser.add_argument('--prompt', type=str, help='Prompt to use for description', default=DEFAULT_SYSTEM_PROMPT)
     parser.add_argument('--system', type=str, help='System prompt to use for description', default=DEFAULT_SYSTEM_PROMPT)
+    parser.add_argument('--skip-existing', action='store_true', help='Skip images that are already indexed')
     args = parser.parse_args()
     main(args.directory, args.query)
