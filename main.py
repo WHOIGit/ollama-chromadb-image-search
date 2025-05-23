@@ -77,6 +77,9 @@ def main_query(query):
         print(f'Description:\n{top_hit_document}')
         if os.path.exists(top_hit_id):
             image = Image.open(top_hit_id)
+            # remove alpha channel if present
+            if image.mode == 'RGBA':
+                image = image.convert('RGB')
             image.save('./top_hit.jpg')
 
 def main(directory, query='image', prompt=DEFAULT_USER_PROMPT, system=DEFAULT_SYSTEM_PROMPT, model='llava-phi3'):
