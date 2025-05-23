@@ -29,6 +29,7 @@ class ImageIndex(object):
         self.prompt = prompt
         self.system = system
         self.model = model
+        self.skip_existing = skip_existing
 
     def __enter__(self):
         self.client = get_client(persistent=True)
